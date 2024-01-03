@@ -1,27 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Rubik+Doodle+Shadow&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+:root{
+    font-family:'Rubik Doodle Shadow','Roboto' ,sans-serif;
+    /* font-family: 'Roboto'; */
+    background: #000;
+    color:white
+
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+/* Example styles - adjust as needed */
+.windowO {
+    animation: windowOpen ease-in-out 300ms forwards;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.windowC {
+    animation: windowClose ease-in-out 300ms forwards;
+}
+
+/* Example styles - adjust as needed */
+.windowO,
+.windowC {
+    z-index: 10;
+}
+
+@keyframes windowOpen {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes windowClose {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(-100%);
+    }
 }
