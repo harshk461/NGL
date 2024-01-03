@@ -1,5 +1,16 @@
 package main
 
+import (
+	"fmt"
+	"log"
+	"net/http"
+
+	"github.com/harshk461/router"
+)
+
 func main() {
-	fmt.Printf("hello")
+	router := router.Router()
+
+	fmt.Println("Server is getting started...")
+	log.Fatal(http.ListenAndServe(":4000", router))
 }

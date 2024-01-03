@@ -1,0 +1,58 @@
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
+*.o
+*.a
+*.so
+
+# Folders
+_vendor/
+bin/
+release/
+
+# Compiled Go files
+*.exe
+*.test
+*.prof
+
+# Logs and temporary files
+*.log
+*.log.*
+*.pid
+*.prof
+
+# Dependency directories
+/vendor/
+
+# Automatically generated files
+/_tools/
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Project-specific configs
+/config/*.yaml
+
+# Ignore local configuration files
+*.local.yml
+
+# IDE settings
+.idea/
+
+# Binary files
+*.db
+*.sqlite
+
+# Ignore macOS specific hidden files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Ignore Windows specific hidden files
+Thumbs.db
+ehthumbs.db
+
+# Ignore test binary, as it is usually ignored in the .gitignore file
+test.out
+
+# Ignore system files
+Desktop.ini
+$RECYCLE.BIN/
