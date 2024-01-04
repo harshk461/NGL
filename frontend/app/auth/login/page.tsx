@@ -1,7 +1,9 @@
 'use client'
 
+import { useUser } from '@/app/context/context';
 import useBase from '@/app/hooks/useBase';
 import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
 import {
     Eye,
     EyeOff,
@@ -24,6 +26,7 @@ export default function Login() {
         'password': '',
     });
     const [loading, setLoading] = useState(false);
+    const { updateUsername } = useUser();
     const url = useBase();
     const router = useRouter();
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,6 +70,15 @@ export default function Login() {
                     const token = res.data.token;
                     if (typeof window !== 'undefined') {
                         localStorage.setItem("token", token);
+                        interface JwtPayload {
+                            username: string;
+                        }
+
+                        const username = (jwtDecode(token) as JwtPayload).username;
+                        updateUsername((pre) => ({
+                            ...pre,
+                            'username': username,
+                        }))
                     }
                     router.replace("/");
                 })

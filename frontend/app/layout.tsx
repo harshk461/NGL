@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import Navbar from './Components/Navbar/Navbar'
 import { Toaster } from 'react-hot-toast'
+import { UserProvider } from './context/context'
 
 export const metadata: Metadata = {
   title: 'IGL',
@@ -14,15 +15,17 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="shortcut icon" href="favicon.ico" />
-      </head>
-      <body>
-        <Navbar />
-        {children}
-        <Toaster position='top-right' />
-      </body>
-    </html>
+    <UserProvider>
+      <html lang="en">
+        <head>
+          <link rel="shortcut icon" href="favicon.ico" />
+        </head>
+        <body>
+          <Navbar />
+          {children}
+          <Toaster position='top-right' />
+        </body>
+      </html>
+    </UserProvider>
   )
 }

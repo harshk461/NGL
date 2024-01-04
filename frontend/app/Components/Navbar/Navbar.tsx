@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 'use client'
 
+import { useUser } from '@/app/context/context';
 import { jwtDecode } from 'jwt-decode';
 import { LogOutIcon, Menu, X } from 'lucide-react'
 import Link from 'next/link';
@@ -9,19 +10,27 @@ import React, { useEffect, useState } from 'react'
 
 export default function Navbar() {
     const [open, setOpen] = useState(false);
-    const [user, setUser] = useState<String | null>(null);
+    const { username, updateUsername } = useUser();
     const router = useRouter();
 
     const handleLogout = () => {
         localStorage.removeItem("token");
+        setOpen(false);
+        updateUsername((pre) => ({
+            ...pre,
+            'username': '',
+        }))
         router.replace("/auth/login");
     }
 
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (token) {
-            const username = (jwtDecode(token) as { username: string }).username;
-            setUser(username);
+            const user = (jwtDecode(token) as { username: string }).username;
+            updateUsername((pre) => ({
+                ...pre,
+                "username": user,
+            }));
         }
     }, []);
 
@@ -36,9 +45,9 @@ export default function Navbar() {
             </div>
 
             <div className='hidden md:flex h-fit gap-4'>
-                {user ? (
+                {username.username !== '' ? (
                     <div className='flex gap-4 font-bold items-center'>
-                        <h1 className='text-xl text-blue-500'>{user}</h1>
+                        <h1 className='text-xl text-blue-500'>{username.username}</h1>
 
                         <Link
                             className='text-md px-4 py-2 border-4 border-blue-400 rounded-xl'
@@ -58,7 +67,7 @@ export default function Navbar() {
                         <Link
                             href={"/auth/login"}
                             className='w-full px-4 py-2 text-center bg-blue-400 rounded-lg font-semibold'>
-                            Login {user}
+                            Login
                         </Link>
                         <Link
                             href={"/auth/sign-up"}
@@ -87,9 +96,9 @@ export default function Navbar() {
                     <div className='mb-7 text-2xl text-white font-semibold'>
                         I'm Gonna Lie
                     </div>
-                    {user ? (
+                    {username.username !== '' ? (
                         <div className='flex gap-4 font-bold items-center justify-center'>
-                            <h1 className='text-xl text-blue-500'>{user}</h1>
+                            <h1 className='text-xl text-blue-500'>{username.username}</h1>
                             <button
                                 onClick={handleLogout}
                                 className='flex items-center gap-2 px-4 py-2 border-4 border-green-400 rounded-xl'>
@@ -99,23 +108,32 @@ export default function Navbar() {
                         </div>
                     ) : (
                         <>
-                            <Link
-                                href={"/auth/login"}
+                            <button
+                                onClick={() => {
+                                    setOpen(false);
+                                    router.replace("/auth/login");
+                                }}
                                 className='w-full px-4 py-2 text-center bg-blue-400 rounded-lg font-semibold'>
-                                Login {user}
-                            </Link>
+                                Login
+                            </button>
                         </>
                     )}
-                    <Link
-                        href={"/messages/all"}
+                    <button
+                        onClick={() => {
+                            setOpen(false);
+                            router.replace("/messages/all");
+                        }}
                         className='w-full px-4 py-2 text-center bg-yellow-800 rounded-lg font-bold'>
                         All Messages
-                    </Link>
-                    <Link
-                        href={"/auth/sign-up"}
+                    </button>
+                    <button
+                        onClick={() => {
+                            setOpen(false);
+                            router.replace("/auth/sign-up");
+                        }}
                         className='px-4 py-2 text-center bg-green-400 rounded-lg font-semibold'>
                         SignUp
-                    </Link>
+                    </button>
                 </div>
             </div>
         </div>
