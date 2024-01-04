@@ -107,7 +107,7 @@ export default function Navbar() {
                         </>
                     )}
                     <Link
-                        href={"/auth/login"}
+                        href={"/messages/all"}
                         className='w-full px-4 py-2 text-center bg-yellow-800 rounded-lg font-bold'>
                         All Messages
                     </Link>
