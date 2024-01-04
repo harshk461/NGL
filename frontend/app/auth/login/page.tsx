@@ -58,7 +58,7 @@ export default function Login() {
                 return;
             }
             setLoading(true);
-            await axios.post("http://localhost:4000/auth/login", data)
+            await axios.post(url + "/auth/login", data)
                 .then(res => {
                     if (res.data.status === 'error') {
                         toast.error(res.data.message);
