@@ -129,12 +129,12 @@ export default function Login() {
                             Sign Up
                         </Link>
                     </div>
-                    <Link
+                    {/* <Link
                         href={"/auth/"}
                         className='w-full bg-gray-500 px-3 py-2 rounded-md font-semibold text-white text-[18px] outline-none text-center
                         transition-all duration-300 hover:bg-red-600 '>
                         Forgot Password
-                    </Link>
+                    </Link> */}
                 </div>
             </div>
         </div >

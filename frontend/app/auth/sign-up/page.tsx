@@ -71,7 +71,7 @@ export default function SignUp() {
                 return;
             }
             setLoading(true);
-            await axios.post("http://localhost:4000/auth/register", data)
+            await axios.post(url + "/auth/register", data)
                 .then(res => {
                     if (res.data.status === 'error') {
                         toast.error(res.data.message);

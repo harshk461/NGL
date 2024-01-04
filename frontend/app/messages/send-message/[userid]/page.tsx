@@ -24,15 +24,15 @@ export default function Page() {
         'message': ''
     })
 
-    const token = localStorage.getItem("token");
     useEffect(() => {
+        const token = localStorage.getItem("token");
         if (token != null) {
             const username = (jwtDecode(token) as { username: string }).username;
             if (username === userid) {
                 setSelf(true);
             }
         }
-    }, [token, userid])
+    }, [])
 
     const handleClick = async () => {
         try {
