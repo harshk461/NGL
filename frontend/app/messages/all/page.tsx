@@ -19,7 +19,7 @@ export default function AllMessages() {
     const [loading, setLoading] = useState(false);
     const router = useRouter();
     var token: string | null;
-    if (typeof window !== 'undefined' && window.localStorage) {
+    if (typeof window !== 'undefined') {
         token = localStorage.getItem('token');
     }
     useEffect(() => {

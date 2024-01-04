@@ -10,28 +10,20 @@ import React, { useEffect, useState } from 'react'
 export default function Navbar() {
     const [open, setOpen] = useState(false);
     const [user, setUser] = useState<String | null>(null);
-    const token = localStorage.getItem("token");
     const router = useRouter();
 
     const handleLogout = () => {
         localStorage.removeItem("token");
-        getData();
         router.replace("/auth/login");
     }
 
-    const getData = () => {
-        if (token != null) {
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (token) {
             const username = (jwtDecode(token) as { username: string }).username;
             setUser(username);
         }
-        else {
-            setUser(null);
-        }
-    }
-
-    useEffect(() => {
-        getData();
-    }, [token]);
+    }, []);
 
     return (
         <div className='relative w-full flex justify-between px-4 md:px-8 py-4 z-100 items-center'>

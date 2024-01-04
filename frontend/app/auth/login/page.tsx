@@ -65,7 +65,7 @@ export default function Login() {
                         return;
                     }
                     const token = res.data.token;
-                    if (typeof window !== 'undefined' && window.localStorage) {
+                    if (typeof window !== 'undefined') {
                         localStorage.setItem("token", token);
                     }
                     router.replace("/");

@@ -4,29 +4,30 @@ import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Link2, Share, Smile } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import useBase from '@/app/hooks/useBase'
 import { jwtDecode } from 'jwt-decode'
 
 export default function Page() {
     const router = useRouter();
     const url = 'http://localhost:3000';
     const [sendUrl, setUrl] = useState('');
+
     const getData = (token: string) => {
         const data = jwtDecode(token);
         const username = (data as { username: string }).username;
-        setUrl(url + "/messages/send-message/" + username);
-    }
+        setUrl(`${url}/messages/send-message/${username}`);
+
+    };
 
     useEffect(() => {
-        var token;
-        if (typeof window !== 'undefined' && window.localStorage) {
-            token = localStorage.getItem("token");
-        }
+        const token = localStorage.getItem("token");
         if (!token) {
             router.replace("/auth/login");
             return;
         }
-        getData(token);
+
+        const data = jwtDecode(token);
+        const username = (data as { username: string }).username;
+        setUrl(`${url}/messages/send-message/${username}`);
     }, [])
 
     return (
