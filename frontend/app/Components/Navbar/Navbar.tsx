@@ -9,7 +9,7 @@ import React, { useEffect, useState } from 'react'
 
 export default function Navbar() {
     const [open, setOpen] = useState(false);
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState<String | null>(null);
     const token = localStorage.getItem("token");
     const router = useRouter();
 
@@ -21,8 +21,8 @@ export default function Navbar() {
 
     const getData = () => {
         if (token != null) {
-            const data = jwtDecode(token);
-            setUser(data.username);
+            const username = (jwtDecode(token) as { username: string }).username;
+            setUser(username);
         }
         else {
             setUser(null);

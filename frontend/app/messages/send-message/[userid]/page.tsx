@@ -20,19 +20,19 @@ export default function Page() {
     const [self, setSelf] = useState(false);
     const url = useBase();
     const [data, setData] = useState<MessageData>({
-        'username': userid,
+        'username': userid.toString(),
         'message': ''
     })
 
     const token = localStorage.getItem("token");
     useEffect(() => {
         if (token != null) {
-            const username = jwtDecode(token).username;
+            const username = (jwtDecode(token) as { username: string }).username;
             if (username === userid) {
                 setSelf(true);
             }
         }
-    }, [token])
+    }, [token, userid])
 
     const handleClick = async () => {
         try {
@@ -56,7 +56,7 @@ export default function Page() {
                 })
         }
         catch (e) {
-            console.log(e.message);
+            console.log((e as Error).message);
         }
         finally {
             setLoading(false);
