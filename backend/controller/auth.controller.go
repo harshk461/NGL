@@ -62,10 +62,6 @@ type SignUpUser struct {
 	Username string `json:"username" bson:"username"`
 }
 
-func enableCors(w *http.ResponseWriter) {
-	(*w).Header().Set("Access-Control-Allow-Origin", "*")
-}
-
 func loginController(email, password string) (bool, *authModel.AuthModel) {
 	filter := bson.D{{Key: "email", Value: email}}
 	login_data, err := authCollection.Find(context.Background(), filter)
