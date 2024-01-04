@@ -95,7 +95,7 @@ export default function Login() {
                         name='email'
                         value={data.email}
                         onChange={handleChange}
-                        placeholder='Username'
+                        placeholder='Email'
                     />
                 </div>
                 <div className='w-full flex items-center p-4 rounded-lg shadow-md shadow-black gap-2 mb-[20px]'>
