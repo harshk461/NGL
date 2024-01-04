@@ -1,10 +1,31 @@
 /* eslint-disable react/no-unescaped-entities */
+'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import { Command, Computer, ConciergeBell, Dribbble, Github, Globe, Linkedin, Siren } from 'lucide-react'
 import Link from 'next/link'
+import axios from 'axios';
 
-export default function pPage() {
+export default function Page() {
+  const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleClick = async () => {
+    try {
+      axios.post("/api/send", { message: message })
+        .then(response => {
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.error("Error:", error);
+        });
+
+    }
+    catch (e) {
+      console.log(e);
+    }
+  }
+
   return (
     <div className='w-full h-screen mt-[40px]'>
       <div className='w-full m-auto flex flex-col p-4 gap-4'>
@@ -37,10 +58,10 @@ export default function pPage() {
             </div>
           </div>
 
-          <div className='mt-[20px]  self-center lg:self-auto'>
+          <div className='mt-[20px] w-full md:w-fit self-center lg:self-auto'>
             <Link
               href="/messages/generate"
-              className='px-8 py-2 rounded-xl text-lg border-4 border-white font-bold '>
+              className='block text-center w-full lg:w-fit px-8 py-2 rounded-xl text-lg border-4 border-white font-bold '>
               Get's Started
             </Link>
           </div>
@@ -102,26 +123,33 @@ export default function pPage() {
             <h2 className="text-3xl font-bold mb-4">Need Help?</h2>
           </div>
 
-          <div className='flex flex-col lg:flex-row text-center gap-5 items-center'>
-            <textarea
+          <div className='w-full flex flex-col lg:flex-row text-center gap-5 items-center justify-center font-bold text-xl'>
+            {/* <textarea
               placeholder='Message...'
-              className='w-full lg:w-[700px] h-[100px] text-start font-bold p-3 outline-none resize-none bg-transparent 
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              className='w-full lg:w-[700px] h-[150px] text-start font-bold p-3 outline-none resize-none bg-transparent 
               border-4 border-secondary rounded-lg' />
 
             <button
+              onClick={handleClick}
               className='text-xl font-semibold px-4 py-2 border-4 border-yellow-300 h-fit rounded-lg'>
               Send Query
-            </button>
+            </button> */}
+            <h1>Mail on :</h1>
+            <Link
+              className='text-green-400'
+              href={"mailto://hk2152573@gmail.com"}> hk2152573@gmail.com</Link>
           </div>
 
-          <div className='w-full lg:w-fit flex gap-4 my-6'>
+          <div className='w-full lg:w-fit flex gap-4 my-6 justify-center'>
             <Link href={"https://github.com/harshk461"} target='__blank'>
               <Github size={35} />
             </Link>
-            <Link href={"https://github.com/harshk461"} target='__blank'>
+            <Link href={"https://www.linkedin.com/in/harshk87/"} target='__blank'>
               <Linkedin size={35} />
             </Link>
-            <Link href={"https://github.com/harshk461"} target='__blank'>
+            <Link href={"https://harshkkk.vercel.app/"} target='__blank'>
               <Globe size={35} />
             </Link>
           </div>
