@@ -56,3 +56,5 @@ test.out
 # Ignore system files
 Desktop.ini
 $RECYCLE.BIN/
+
+.env

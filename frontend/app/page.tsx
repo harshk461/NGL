@@ -139,7 +139,7 @@ export default function Page() {
             <h1>Mail on :</h1>
             <Link
               className='text-green-400'
-              href={"mailto://hk2152573@gmail.com"}> hk2152573@gmail.com</Link>
+              href={"mailto:hk2152573@gmail.com"}> hk2152573@gmail.com</Link>
           </div>
 
           <div className='w-full lg:w-fit flex gap-4 my-6 justify-center'>
