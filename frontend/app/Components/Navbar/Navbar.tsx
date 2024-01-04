@@ -1,14 +1,39 @@
-/* eslint-disable react/no-unescaped-entities */
 'use client'
 
-import { Menu, X } from 'lucide-react'
+import { jwtDecode } from 'jwt-decode';
+import { LogOutIcon, Menu, X } from 'lucide-react'
 import Link from 'next/link';
-import React, { useState } from 'react'
+import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react'
 
 export default function Navbar() {
     const [open, setOpen] = useState(false);
+    const [user, setUser] = useState(null);
+    const token = localStorage.getItem("token");
+    const router = useRouter();
+
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        getData();
+        router.replace("/auth/login");
+    }
+
+    const getData = () => {
+        if (token != null) {
+            const data = jwtDecode(token);
+            setUser(data.username);
+        }
+        else {
+            setUser(null);
+        }
+    }
+
+    useEffect(() => {
+        getData();
+    }, [token]);
+
     return (
-        <div className='relative w-full flex justify-between px-4 md:px-8 py-4 z-100'>
+        <div className='relative w-full flex justify-between px-4 md:px-8 py-4 z-100 items-center'>
             <Link
                 href={"/"} className='text-xl text-red-600 font-bold'>
                 IGL
@@ -18,16 +43,37 @@ export default function Navbar() {
             </div>
 
             <div className='hidden md:flex h-fit gap-4'>
-                <Link
-                    href={"/auth/login"}
-                    className='px-4 py-2 text-center bg-blue-400 rounded-lg font-semibold'>
-                    Login
-                </Link>
-                <Link
-                    href={"/auth/sign-up"}
-                    className='px-4 py-2 text-center bg-green-400 rounded-lg font-semibold'>
-                    SignUp
-                </Link>
+                {user ? (
+                    <div className='flex gap-4 font-bold items-center'>
+                        <h1 className='text-xl text-blue-500'>{user}</h1>
+
+                        <Link
+                            className='text-md px-4 py-2 border-4 border-blue-400 rounded-xl'
+                            href={"/messages/all"}>
+                            All Messages
+                        </Link>
+
+                        <button
+                            onClick={handleLogout}
+                            className='flex items-center gap-2 px-4 py-2 border-4 border-green-400 rounded-xl'>
+                            Logout
+                            <LogOutIcon />
+                        </button>
+                    </div>
+                ) : (
+                    <>
+                        <Link
+                            href={"/auth/login"}
+                            className='w-full px-4 py-2 text-center bg-blue-400 rounded-lg font-semibold'>
+                            Login {user}
+                        </Link>
+                        <Link
+                            href={"/auth/sign-up"}
+                            className='w-full px-4 py-2 text-center bg-green-400 rounded-lg font-semibold'>
+                            SignUp
+                        </Link>
+                    </>
+                )}
             </div>
 
             <div className='block md:hidden'>
@@ -48,19 +94,33 @@ export default function Navbar() {
                     <div className='mb-7 text-2xl text-white font-semibold'>
                         I'm Gonna Lie
                     </div>
+                    {user ? (
+                        <div className='flex gap-4 font-bold items-center justify-center'>
+                            <h1 className='text-xl text-blue-500'>{user}</h1>
+                            <button
+                                onClick={handleLogout}
+                                className='flex items-center gap-2 px-4 py-2 border-4 border-green-400 rounded-xl'>
+                                Logout
+                                <LogOutIcon />
+                            </button>
+                        </div>
+                    ) : (
+                        <>
+                            <Link
+                                href={"/auth/login"}
+                                className='w-full px-4 py-2 text-center bg-blue-400 rounded-lg font-semibold'>
+                                Login {user}
+                            </Link>
+                        </>
+                    )}
                     <Link
                         href={"/auth/login"}
-                        className='w-full px-4 py-2 text-center bg-yellow-400 rounded-lg font-semibold'>
-                        Messages
-                    </Link>
-                    <Link
-                        href={"/auth/login"}
-                        className='w-full px-4 py-2 text-center bg-blue-400 rounded-lg font-semibold'>
-                        Login
+                        className='w-full px-4 py-2 text-center bg-yellow-800 rounded-lg font-bold'>
+                        All Messages
                     </Link>
                     <Link
                         href={"/auth/sign-up"}
-                        className='w-full px-4 py-2 text-center bg-green-400 rounded-lg font-semibold'>
+                        className='px-4 py-2 text-center bg-green-400 rounded-lg font-semibold'>
                         SignUp
                     </Link>
                 </div>

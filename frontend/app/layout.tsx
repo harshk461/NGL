@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import Navbar from './Components/Navbar/Navbar'
+import { Toaster } from 'react-hot-toast'
 
 export const metadata: Metadata = {
   title: 'IGL',
@@ -17,6 +18,7 @@ export default function RootLayout({
       <body>
         <Navbar />
         {children}
+        <Toaster position='top-right' />
       </body>
     </html>
   )

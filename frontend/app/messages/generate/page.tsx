@@ -1,19 +1,30 @@
 'use client'
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Link2, Share, Smile } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import useBase from '@/app/hooks/useBase'
+import { jwtDecode } from 'jwt-decode'
 
 export default function Page() {
     const router = useRouter();
-    // useEffect(() => {
-    //     const token = localStorage.getItem("token");
-    //     if (!token) {
-    //         router.replace("/auth/login");
-    //         return;
-    //     }
-    // }, [])
+    const url = 'http://localhost:3000';
+    const [sendUrl, setUrl] = useState('');
+    const getData = (token: string) => {
+        const data = jwtDecode(token);
+        const username = (data as { username: string }).username;
+        setUrl(url + "/messages/send-message/" + username);
+    }
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            router.replace("/auth/login");
+            return;
+        }
+        getData(token);
+    }, [])
 
     return (
         <div className='w-full flex flex-col p-5'>
@@ -72,9 +83,10 @@ export default function Page() {
                     <h2 className="text-2xl font-bold mb-2">Get Started</h2>
                     <h1>Your Link:
                         <Link
-                            href={"http://localhost:3000/messages/send-message/1234565"}
+                            href={sendUrl}
+                            target='__blank'
                             className='text-blue-400 ml-4 hover:underline duration-150 transition-all break-words'>
-                            http://localhost:3000/messages/send-message/1234565
+                            {sendUrl}
                         </Link>
                     </h1>
                 </section>
