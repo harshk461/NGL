@@ -18,7 +18,10 @@ export default function Page() {
     }
 
     useEffect(() => {
-        const token = localStorage.getItem("token");
+        var token;
+        if (typeof window !== 'undefined' && window.localStorage) {
+            token = localStorage.getItem("token");
+        }
         if (!token) {
             router.replace("/auth/login");
             return;

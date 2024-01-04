@@ -18,7 +18,10 @@ export default function AllMessages() {
     const url = useBase();
     const [loading, setLoading] = useState(false);
     const router = useRouter();
-    const token = localStorage.getItem('token');
+    var token: string | null;
+    if (typeof window !== 'undefined' && window.localStorage) {
+        token = localStorage.getItem('token');
+    }
     useEffect(() => {
         const getMessages = async () => {
             if (token == null) {
