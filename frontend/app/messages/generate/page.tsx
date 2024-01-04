@@ -8,7 +8,7 @@ import { jwtDecode } from 'jwt-decode'
 
 export default function Page() {
     const router = useRouter();
-    const url = 'http://localhost:3000';
+    const url = 'https://igl-omega.vercel.app';
     const [sendUrl, setUrl] = useState('');
 
     const getData = (token: string) => {
