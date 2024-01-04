@@ -27,7 +27,7 @@ export default function AllMessages() {
             }
             try {
                 setLoading(true);
-                const username = jwtDecode(token).username;
+                const username = (jwtDecode(token) as { username: string }).username;
                 await axios.get(url + "/messages/get/" + username)
                     .then(res => {
                         const data = res.data;
@@ -43,7 +43,7 @@ export default function AllMessages() {
                     })
             }
             catch (e) {
-                console.log(e.message);
+                console.log((e as Error).message);
             }
             finally {
                 setLoading(false);
