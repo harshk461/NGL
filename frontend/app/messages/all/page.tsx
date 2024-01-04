@@ -62,7 +62,7 @@ export default function AllMessages() {
                 All Messages
             </div>
             <div className='flex flex-col'>
-                {messages.length > 0 ? (
+                {messages.length > 0 && !loading ? (
                     messages.map((msg, i) => (
                         <MessageBox
                             key={i}
@@ -71,9 +71,12 @@ export default function AllMessages() {
                         />
                     ))
                 ) : (
-                    <div className='text-xl text-red-400'>No messages</div>
+                    loading ? (
+                        <div className='w-[60px] h-[60px] rounded-full border-t-2 border-t-white animate-spin'></div>
+                    ) : (
+                        <div className='text-xl text-red-400'>No messages</div>
+                    )
                 )}
-
             </div>
         </div>
     )
